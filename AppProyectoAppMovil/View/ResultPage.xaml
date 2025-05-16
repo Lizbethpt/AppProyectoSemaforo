@@ -4,15 +4,15 @@
              x:Class="AppProyectoAppMovil.Views.ResultPage"
              Title="Resultado">
 
-
-    <Grid BackgroundColor="{Binding BackgroundColor}">
-        <VerticalStackLayout>
-            <Label Text="{Binding Message}" 
+	<Grid BackgroundColor="{Binding BackgroundColor}">
+		<VerticalStackLayout>
+			<Label x:Name="resultadoLabel"
+                   Text="Resultado"
                    FontSize="Large"
-                   HorizontalOptions="Center"/>
+                   HorizontalOptions="Center" />
 
-            <Button Text="Volver a Escanear"
-                    Command="{Binding ReturnCommand}"/>
-        </VerticalStackLayout>
-    </Grid>
+			<Button Text="Volver a Escanear"
+                    Command="{Binding ReturnCommand}" />
+		</VerticalStackLayout>
+	</Grid>
 </ContentPage>

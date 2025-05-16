@@ -1,46 +1,40 @@
-﻿using AppProyectoAppMovil.Models;
-using System.Collections.Generic;
-using System.Linq;
+﻿using SQLite;
+using AppProyectoAppMovil.Models;
+using System.IO;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace AppProyectoAppMovil.Services
 {
     public class DatabaseService
     {
-        private List<Cliente> _clientes;
-        private List<OrdenTrabajo> _ordenes;
+        private readonly SQLiteAsyncConnection _database;
 
         public DatabaseService()
         {
-            // Simulación de datos
-            _clientes = new List<Cliente>
-            {
-                new Cliente { CodigoCliente = "CLI123", Nombre = "Cliente Prueba" }
-            };
-
-            _ordenes = new List<OrdenTrabajo>
-            {
-                new OrdenTrabajo
-                {
-                    CodigoOrden = "ORD456",
-                    Articulos = new List<Articulo>
-                    {
-                        new Articulo { CodigoArticulo = "ART789", CantidadRequerida = 2, CantidadEscaneada = 0 }
-                    }
-                }
-            };
+            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "app_database.db");
+            _database = new SQLiteAsyncConnection(dbPath);
         }
 
-        public Task<Cliente> GetClienteByCodeAsync(string code)
+        public async Task Init()
         {
-            var cliente = _clientes.FirstOrDefault(c => c.CodigoCliente == code);
-            return Task.FromResult(cliente);
+            await _database.CreateTableAsync<Cliente>();
+            await _database.CreateTableAsync<OrdenTrabajo>();
+            await _database.CreateTableAsync<Articulo>();
+            await _database.CreateTableAsync<OrdenArticulo>();
         }
 
-        public Task<OrdenTrabajo> GetOrdenByCodeAsync(string code)
+        // Métodos de ejemplo para obtener datos
+        public async Task<Cliente> GetClienteByCodeAsync(string code)
         {
-            var orden = _ordenes.FirstOrDefault(o => o.CodigoOrden == code);
-            return Task.FromResult(orden);
+            return await _database.Table<Cliente>().FirstOrDefaultAsync(c => c.CodigoCliente == code);
         }
+
+        public async Task<OrdenTrabajo> GetOrdenByCodeAsync(string code)
+        {
+            return await _database.Table<OrdenTrabajo>().FirstOrDefaultAsync(o => o.CodigoOrden == code);
+        }
+
+        // Puedes agregar más métodos para insertar, actualizar, etc.
     }
 }

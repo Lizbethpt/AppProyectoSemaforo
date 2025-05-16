@@ -1,5 +1,6 @@
 ﻿using AppProyectoAppMovil.ViewModels;
 using ZXing;
+using System.Linq;
 
 namespace AppProyectoAppMovil.Views
 {
@@ -15,21 +16,20 @@ namespace AppProyectoAppMovil.Views
 
         private async void barcodeReader_BarcodesDetected(object sender, ZXing.Net.Maui.BarcodeDetectionEventArgs e)
         {
-            if (e.Results.Count > 0)
+            if (e.Results.Count() > 0)
             {
                 var code = e.Results[0].Value;
                 if (!string.IsNullOrEmpty(code))
                 {
-                    // Espera unos milisegundos para evitar múltiples lecturas del mismo código
                     barcodeReader.IsDetecting = false;
 
-                    await viewModel.ScanCommand.ExecuteAsync(code);
+                    viewModel.ScanCommand.Execute(code); // Corrección aquí
 
-                    // Vuelve a activar el lector después de un pequeño delay
                     await Task.Delay(2000);
                     barcodeReader.IsDetecting = true;
                 }
             }
         }
+
     }
 }

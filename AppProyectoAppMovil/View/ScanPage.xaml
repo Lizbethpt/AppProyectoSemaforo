@@ -5,22 +5,18 @@
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI"
              x:Class="AppProyectoAppMovil.Views.ScanPage">
 
-	<ContentPage.BindingContext>
-		<vm:ScanViewModel />
-	</ContentPage.BindingContext>
-
-	<StackLayout Padding="10">
-		<!-- Vista para escanear el código de barras -->
-		<zxing:CameraBarcodeReaderView x:Name="barcodeReader"
+    <StackLayout Padding="10">
+        <!-- Vista para escanear el código de barras -->
+        <zxing:CameraBarcodeReaderView x:Name="barcodeReader"
                                        BarcodesDetected="barcodeReader_BarcodesDetected"
                                        IsDetecting="True"
                                        HorizontalOptions="FillAndExpand"
                                        VerticalOptions="FillAndExpand"
                                        HeightRequest="400"/>
 
-		<!-- Botón para validar embarque -->
-		<Button Text="Validar Embarque"
+        <!-- Botón para validar embarque -->
+        <Button Text="Validar Embarque"
                 Command="{Binding ValidateCommand}"
                 Margin="0,20,0,0"/>
-	</StackLayout>
+    </StackLayout>
 </ContentPage>
