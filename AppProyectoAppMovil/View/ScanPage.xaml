@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AppProyectoAppMovil.ViewModels"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI"
+             x:Class="AppProyectoAppMovil.Views.ScanPage">
+
+	<ContentPage.BindingContext>
+		<vm:ScanViewModel />
+	</ContentPage.BindingContext>
+
+	<StackLayout Padding="10">
+		<!-- Vista para escanear el código de barras -->
+		<zxing:CameraBarcodeReaderView x:Name="barcodeReader"
+                                       BarcodesDetected="barcodeReader_BarcodesDetected"
+                                       IsDetecting="True"
+                                       HorizontalOptions="FillAndExpand"
+                                       VerticalOptions="FillAndExpand"
+                                       HeightRequest="400"/>
+
+		<!-- Botón para validar embarque -->
+		<Button Text="Validar Embarque"
+                Command="{Binding ValidateCommand}"
+                Margin="0,20,0,0"/>
+	</StackLayout>
+</ContentPage>
